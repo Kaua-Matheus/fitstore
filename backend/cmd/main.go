@@ -1,9 +1,15 @@
 package main
 
 import (
-	"fmt"
+
+	_"github.com/Kaua-Matheus/fitstore/backend/database"
+	"github.com/Kaua-Matheus/fitstore/backend/server"
+	//"github.com/gin-contrib/cors"
 )
 
 func main() {
-	fmt.Println("Nil.");
+
+	// Falta configurar o CORS
+
+	server.Run();
 }
