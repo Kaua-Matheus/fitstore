@@ -1,7 +1,9 @@
 import './App.css'
 
+// Importações de componentes
 import Header from './assets/components/Header'
 import Carousel from './assets/components/Carousel'
+import Product from './assets/components/Product'
 
 function App() {
 
@@ -16,7 +18,12 @@ function App() {
         <div>
           <p>Ganhe um desconto usando o cupom "SMART"</p>
         </div>
-        
+
+        {/* Adicionar dentro do banco os produtos e criar requisições */}
+        <div>
+          <Product Name="Halter"></Product>
+        </div>
+
       </div>
 
     </body>
