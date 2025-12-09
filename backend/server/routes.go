@@ -31,9 +31,10 @@ func Run() {
 	}
 
 	testApi(router);
-	getAllData(router, db);
+	getAllProducts(router, db);
 	addProduct(router, db);
 	updateProduct(router, db);
+	getAllImage(router, db);
 
 	router.Run(":8080");
 }
@@ -48,7 +49,7 @@ func testApi(router *gin.Engine) {
 	})
 }
 
-func getAllData(router *gin.Engine, db *gorm.DB) {
+func getAllProducts(router *gin.Engine, db *gorm.DB) {
 	router.GET("/products", func(c *gin.Context) {
 
 		alldata, err := database.GetAllProduct(db); if err != nil {
@@ -101,6 +102,19 @@ func updateProduct(router *gin.Engine, db *gorm.DB) {
 
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Produto adicionado com sucesso",
+		})
+	})
+}
+
+func getAllImage(router *gin.Engine, db *gorm.DB) {
+	router.GET("/images", func(c *gin.Context) {
+
+		alldata, err := database.GetAllImage(db); if err != nil {
+			fmt.Printf("An error occours trying to get the data: %s\n", err);
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"data": alldata,
 		})
 	})
 }

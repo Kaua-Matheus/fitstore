@@ -12,9 +12,20 @@ type Product struct {
 	ProductName			string		`json:"product_name"`
 	ProductPrice		float32		`json:"product_price"`
 	ProductDescription	string		`json:"product_description"`
+	IdImage				uuid.UUID	`json:"id_image" gorm:"type:uuid"`
 	LastUpdate			time.Time	`json:"last_update" gorm:"autoUpdateTime"`
 }
 
 func (Product) TableName() string {
 	return "product";
+}
+
+type ProductImage struct {
+	IdImage		uuid.UUID	`json:"id_image" gorm:"type:uuid;primaryKey;default:gen_random_uuid()"`
+	ContentType	string		`json:"content_type"`
+	FileData	string		`json:"-"`
+}
+
+func (ProductImage) TableName() string {
+	return "product_image";
 }

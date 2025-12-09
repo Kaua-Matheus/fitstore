@@ -35,3 +35,11 @@ func UpdateProduct(db *gorm.DB, id uuid.UUID, product Product) (error) {
 
 	return nil;
 }
+
+func GetAllImage(db *gorm.DB) ([]ProductImage, error) {
+
+	allImages := []ProductImage{};
+	result := db.Find(&allImages);
+
+	return allImages, result.Error;
+}

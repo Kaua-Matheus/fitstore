@@ -9,7 +9,5 @@ import (
 
 func main() {
 
-	// Falta configurar o CORS
-
 	server.Run();
 }

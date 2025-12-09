@@ -31,6 +31,7 @@ func NewConnection() (*gorm.DB, error) {
 
 	err = db.AutoMigrate(
 		&Product{},
+		&ProductImage{},
 	); if err != nil {
 		return nil, fmt.Errorf("error in automigrate: %s", err);
 	};
