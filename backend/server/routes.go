@@ -3,6 +3,8 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -36,11 +38,14 @@ func Run() {
 	updateProduct(router, db);
 	getAllImage(router, db);
 
+	// Files
+	setupFileRoutes(router);
+
 	router.Run(":8080");
 }
 
 
-// Funções de Rota
+// Funções de Produto
 func testApi(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -106,6 +111,25 @@ func updateProduct(router *gin.Engine, db *gorm.DB) {
 	})
 }
 
+// Funções de Arquivo
+func setupFileRoutes(router *gin.Engine) {
+	router.GET("/files/:filename", func (c *gin.Context)  {
+		filename := c.Param("filename");
+
+		filePath := filepath.Join("..", "uploads", filename);
+
+		if _, err := os.Stat(filePath); os.IsNotExist(err) {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "File not found",
+			})
+			return;
+		}
+
+		c.File(filePath)
+	})
+}
+
+// Funções de Imagem
 func getAllImage(router *gin.Engine, db *gorm.DB) {
 	router.GET("/images", func(c *gin.Context) {
 

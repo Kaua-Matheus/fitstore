@@ -14,9 +14,15 @@ type ProductData = {
   product_price: number
 }
 
+type ImageData = {
+  content_type: string
+  file_data: string
+}
+
 function App() {
 
   const [products, setProducts] = useState<ProductData[]>([])
+  const [images, setImages] = useState<ImageData[]>([])
   // var [data, setData] = useState({})
 
   useEffect(() => {
@@ -28,16 +34,19 @@ function App() {
     //   .catch(err => console.error(err));
 
     // console.log(`Esses são os dados: ${data}`);
-    const fetchProducts = async () => {
+    const fetchAll = async () => {
 
       try {
-        const response = await fetch("http://localhost:8080/products");
+        // Response Product
+        const response_product = await fetch("http://localhost:8080/products");
+        const data_product = await response_product.json();
 
-        // Inserimos await pois a operação de conversão de json não é instantânea
-        const data = await response.json();
+        setProducts(data_product.data);
 
-        setProducts(data.data);
-        console.log(data);
+        const response_image = await fetch("http://localhost:8080/images");
+        const data_image = await response_image.json();
+
+        setImages(data_image.data);
         
       } catch(err) {
         console.log(`Erro: ${err}`);
@@ -45,7 +54,7 @@ function App() {
 
     };
 
-    fetchProducts();
+    fetchAll();
 
   }, [])
 
@@ -74,6 +83,32 @@ function App() {
             }
           </div>
 
+        </div>
+
+        <div>
+          <h1>Imagens</h1>
+
+          <div className='flex space-x-2'>
+            {/* Passamos o Product dentro de um () pois componentes react devem ser introduzidos assim */}
+
+            {
+              images.map((img) => (
+                <>
+                  <p>imagem: {img.file_data}</p> <br />
+                  <img src={`${img.file_data}`} alt={`${img.content_type}`} />
+                </>
+              ))
+            }
+          </div>
+
+        </div>
+
+        <br />
+        <div>
+          Imagem Teste
+          
+          {/* <img src="Dark.png" alt="Imagem Dark" /> */}
+          <img src="src/perfil.png" alt="Imagem Perfil" />
         </div>
 
       </div>

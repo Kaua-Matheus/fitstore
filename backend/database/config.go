@@ -23,7 +23,7 @@ func (Product) TableName() string {
 type ProductImage struct {
 	IdImage		uuid.UUID	`json:"id_image" gorm:"type:uuid;primaryKey;default:gen_random_uuid()"`
 	ContentType	string		`json:"content_type"`
-	FileData	string		`json:"-"`
+	FileData	string		`json:"file_data"`
 }
 
 func (ProductImage) TableName() string {
